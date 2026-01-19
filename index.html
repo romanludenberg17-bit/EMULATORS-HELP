@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMULATORS HELP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #1a1a1a, #0a0a0a, #2a2a2a, #121212);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #f0f0f0;
+            line-height: 1.5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background-color: #121212;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #222;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Боковое меню */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: #0a0a0a;
+            border-right: 2px solid #ff0000;
+            z-index: 1000;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            padding-top: 60px;
+        }
+
+        .side-menu.active {
+            left: 0;
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #222;
+            color: #ff0000;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #333;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-toggle:hover {
+            background-color: #2a2a2a;
+        }
+
+        .side-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .side-menu-link {
+            background-color: #222;
+            color: #f0f0f0;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .side-menu-link:hover {
+            background-color: #2a2a2a;
+            color: #ff0000;
+            transform: translateX(5px);
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ff0000;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #ff0000;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 5px rgba(255, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: #aaa;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .choice-section {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .choice-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+        }
+
+        .emulator-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .emulator-btn {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            padding: 20px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 260px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .emulator-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .winlator-btn {
+            border-color: #ff0000;
+        }
+
+        .winlator-btn:hover {
+            background-color: #330000;
+            color: #ff0000;
+        }
+
+        .gamehub-btn {
+            border-color: #00a8ff;
+        }
+
+        .gamehub-btn:hover {
+            background-color: #002233;
+            color: #00a8ff;
+        }
+
+        .btn-icon {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #ff0000;
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        h3 {
+            color: #f0f0f0;
+            font-size: 1.3rem;
+            margin: 20px 0 12px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .note {
+            background-color: #1a1a1a;
+            border-left: 4px solid #ff6b6b;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .warning {
+            background-color: #2a1a1a;
+            border-left: 4px solid #ff9f43;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .step {
+            background-color: #1a2a2a;
+            border-left: 4px solid #ff0000;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ff0000;
+            color: #0a0a0a;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 12px 8px 12px 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #cc0000;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        .btn-secondary:hover {
+            background-color: #444;
+        }
+
+        .btn-danger {
+            background-color: #ff6b6b;
+            color: #0a0a0a;
+        }
+
+        .btn-danger:hover {
+            background-color: #ff5252;
+            color: white;
+        }
+
+        .btn-help {
+            background-color: #0088cc;
+            color: white;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+        }
+
+        .btn-help:hover {
+            background-color: #006699;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .link-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: #ff0000;
+        }
+
+        .link-card h3 {
+            margin-top: 0;
+            color: #f0f0f0;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: #ff0000;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .ps {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 25px;
+            padding-top: 12px;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .emulator-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .emulator-btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 18px 30px;
+            }
+            
+            .side-menu {
+                width: 250px;
+                left: -250px;
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Боковое меню -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-links">
+            <a href="#main" class="side-menu-link"><i class="fas fa-home"></i> Главная</a>
+            <a href="#gamehub" class="side-menu-link"><i class="fas fa-gamepad"></i> GameHub</a>
+            <a href="#winlator" class="side-menu-link"><i class="fas fa-desktop"></i> Winlator</a>
+            <a href="#help" class="side-menu-link"><i class="fas fa-question-circle"></i> Обратиться за помощью</a>
+            <a href="#download-games" class="side-menu-link"><i class="fas fa-download"></i> Скачать Игры</a>
+            <a href="#compatibility" class="side-menu-link"><i class="fas fa-check-circle"></i> Проверка Совместимости</a>
+        </div>
+    </div>
+
+    <!-- Кнопка открытия меню -->
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+        <span>Меню</span>
+    </div>
+
+    <!-- Оверлей для закрытия меню -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-gamepad"></i> EMULATORS HELP</h1>
+            <p class="subtitle">Помощь в настройке эмуляторов для запуска игр на мобильных устройствах</p>
+        </header>
+
+        <section class="choice-section" id="main">
+            <h2 class="choice-title">Выберите эмулятор для настройки:</h2>
+            <div class="emulator-buttons">
+                <a href="#winlator" class="emulator-btn winlator-btn">
+                    <i class="fas fa-desktop btn-icon"></i>
+                    <span>Winlator</span>
+                </a>
+                <a href="#gamehub" class="emulator-btn gamehub-btn">
+                    <i class="fas fa-gamepad btn-icon"></i>
+                    <span>GameHub</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="content-section hidden" id="winlator">
+            <h2><i class="fas fa-windows"></i> Настройка Winlator</h2>
+            
+            <p>Отличный выбор! Winlator - один из лучших эмуляторов Windows для Android.</p>
+            
+            <div class="step">
+                <h3>Шаг 1: Скачивание приложения</h3>
+                <p>Скачайте приложение Winlator по ссылке с GitHub:</p>
+                <a href="https://github.com/coffincolors/winlator/releases/download/cmod_v13.1/Winlator-Cmod-v13.1.1.apk" class="btn" target="_blank">
+                    <i class="fas fa-download"></i> Скачать Winlator
+                </a>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 2: Установка приложения</h3>
+                <p>Установите приложение. <strong>Антивирус телефона может ругаться, но приложение абсолютно безопасно.</strong></p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 3: Первый запуск</h3>
+                <p>После установки приложения откройте его и дождитесь установки компонентов. После установки компонентов выдайте разрешение доступа ко всем файлам если это требуется.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 4: Создание контейнера</h3>
+                <p>Создайте контейнер нажав на "+" в правом верхнем углу приложения. Вас перекинет в создание контейнера.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 5: Настройка контейнера</h3>
+                <p>Прочитайте и настройте контейнер по инструкции:</p>
+                <a href="https://telegra.ph/Nastrojka-Kontejnera-dlya-Winlator-01-18" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-cog"></i> Настройка Контейнера
+                </a>
+            </div>
+            
+            <a href="#main" class="btn"><i class="fas fa-arrow-left"></i> Вернуться к выбору эмулятора</a>
+        </section>
+
+        <section class="content-section hidden" id="gamehub">
+            <h2><i class="fas fa-gamepad"></i> Настройка GameHub</h2>
+            
+            <p>Отличный выбор! GameHub - мощный эмулятор для запуска PC игр на Android.</p>
+            
+            <div class="step">
+                <h3>Шаг 1: Скачивание приложения</h3>
+                <p>Скачайте приложение GameHub с официального сайта:</p>
+                <a href="https://gamehub.xiaoji.com/" class="btn" target="_blank">
+                    <i class="fas fa-download"></i> Скачать GameHub
+                </a>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 2: Регистрация</h3>
+                <p>После того как вы скачали GameHub войдите и зарегистрируйтесь в приложении.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 3: Импорт игр</h3>
+                <p>Перейдите во вкладку "Мое" и нажмите "Импорт PC Игр". Дайте доступ к управлению всеми файлами если требуется.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 4: Выбор файла игры</h3>
+                <p>Вас перекинет в файловый менеджер Game Hub. Перейдите в папку куда вы распаковали игру и выберите файл запуска с расширением .exe</p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 5: Запуск игры</h3>
+                <p>После этого запустите игру. Произойдет загрузка Firmware, DXVK / Wine, а также других требуемых компонентов.</p>
+            </div>
+            
+            <div class="warning">
+                <p><strong>⚠️ Игра может не запуститься с первого раза — это нормально. В таком случае переходим к настройке контейнера.</strong></p>
+            </div>
+            
+            <div class="step">
+                <h3>Шаг 6: Настройка контейнера</h3>
+                <p>Чтобы открыть настройки Контейнера нажмите на три точки снизу импортированной игры и выберите "Настройки PC игры". Далее переходим во вкладку "Совместимость" и настраиваем контейнер по ссылке ниже для своего процессора:</p>
+                <a href="https://telegra.ph/Nastrojki-Kontejnera-dlya-Game-Hub-01-18" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-cog"></i> Настройка Контейнера
+                </a>
+            </div>
+            
+            <a href="#main" class="btn"><i class="fas fa-arrow-left"></i> Вернуться к выбору эмулятора</a>
+        </section>
+
+        <section class="content-section hidden" id="help">
+            <h2><i class="fas fa-question-circle"></i> Получить помощь</h2>
+            
+            <div class="note">
+                <h3>📌 Важно</h3>
+                <p>Каждая игра уникальна. Если игра не запускается обратитесь к любому из администраторов за платной помощью:</p>
+                <a href="https://t.me/gamingphoneschat/157" class="btn btn-help" target="_blank">
+                    <i class="fab fa-telegram"></i> Обратиться за помощью
+                </a>
+            </div>
+            
+            <a href="#main" class="btn"><i class="fas fa-arrow-left"></i> Вернуться к выбору эмулятора</a>
+        </section>
+
+        <section class="content-section hidden" id="download-games">
+            <h2><i class="fas fa-download"></i> Скачать Игры</h2>
+            
+            <p>Вы можете скачать игры с telegram многотомными архивами по ссылке ниже:</p>
+            
+            <div class="links-grid">
+                <div class="link-card">
+                    <h3>Игры для PC</h3>
+                    <p>Многотомные архивы игр для эмуляторов</p>
+                    <a href="https://t.me/PC_GAMES_ON_MOBILE/182" class="btn" target="_blank">
+                        <i class="fas fa-gamepad"></i> Скачать Игры
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>Инструкция по распаковке</h3>
+                    <p>Как правильно распаковывать многотомные архивы</p>
+                    <a href="https://t.me/PC_GAMES_ON_MOBILE/186?single" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-file-archive"></i> Как Распаковывать?
+                    </a>
+                </div>
+            </div>
+            
+            <a href="#main" class="btn"><i class="fas fa-arrow-left"></i> Вернуться к выбору эмулятора</a>
+        </section>
+
+        <section class="content-section hidden" id="compatibility">
+            <h2><i class="fas fa-check-circle"></i> Проверка Совместимости Игр</h2>
+            
+            <div class="warning">
+                <p><strong>⚠️ВНИМАНИЕ⚠️</strong></p>
+                <p>Перед тем как скачивать игры, проверьте поддерживает ли их ваш телефон! Все результаты приблизительные!</p>
+            </div>
+            
+            <div class="links-grid">
+                <div class="link-card">
+                    <h3>Тест для Snapdragon</h3>
+                    <p>Проверка совместимости для процессоров Snapdragon</p>
+                    <a href="https://romanludenberg17-bit.github.io/My-Site/" class="btn" target="_blank">
+                        <i class="fas fa-microchip"></i> Тест Совместимости Snapdragon
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>Тест для Dimensity</h3>
+                    <p>Проверка совместимости для процессоров Dimensity</p>
+                    <a href="https://romanludenberg17-bit.github.io/Dimensity-/" class="btn" target="_blank">
+                        <i class="fas fa-microchip"></i> Тест Совместимости Dimensity
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>Требовательные игры</h3>
+                    <p>Список игр с высокими системными требованиями</p>
+                    <a href="https://telegra.ph/Trebovatelnye-Igry-01-18" class="btn btn-danger" target="_blank">
+                        <i class="fas fa-exclamation-triangle"></i> ⚠️ ТРЕБОВАТЕЛЬНЫЕ ИГРЫ ⚠️
+                    </a>
+                </div>
+            </div>
+            
+            <a href="#main" class="btn"><i class="fas fa-arrow-left"></i> Вернуться к выбору эмулятора</a>
+        </section>
+
+        <div class="note">
+            <h3>📌 Важно</h3>
+            <p>Каждая игра уникальна. Если игра не запускается обратитесь к любому из администраторов за платной помощью по ссылке ниже ⬇️⬇️⬇️</p>
+            <a href="https://t.me/gamingphoneschat/157" class="btn btn-help" target="_blank">
+                <i class="fab fa-telegram"></i> Обратиться за помощью
+            </a>
+        </div>
+
+        <div class="ps">
+            <p>Бот создан @rommy_105 благодаря @PR0R0KI который вдохновил меня во многом для бесплатной помощи по настройкам Эмуляторов.</p>
+            <a href="https://t.me/GameHubIProrok" class="btn btn-secondary" target="_blank" style="margin-top: 15px;">
+                <i class="fab fa-telegram"></i> Наш Telegram
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>EMULATORS HELP &copy; 2026 | Rommy</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Боковое меню
+            const menuToggle = document.getElementById('menuToggle');
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                sideMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                if (sideMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Закрытие меню при клике на оверлей
+            menuOverlay.addEventListener('click', function() {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+            
+            // Закрытие меню при клике на ссылку
+            const menuLinks = document.querySelectorAll('.side-menu-link');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    sideMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+            
+            // Навигация по страницам
+            const allLinks = document.querySelectorAll('.side-menu-link, .emulator-btn, .btn[href^="#"]');
+            const sections = document.querySelectorAll('.content-section');
+            const mainSection = document.getElementById('main');
+            
+            allLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetSection = document.getElementById(targetId);
+                        
+                        // Скрываем все секции
+                        sections.forEach(section => {
+                            section.classList.add('hidden');
+                        });
+                        
+                        // Показываем основную секцию или целевую
+                        if (targetId === 'main') {
+                            mainSection.classList.remove('hidden');
+                            window.scrollTo({top: 0, behavior: 'smooth'});
+                        } else if (targetSection) {
+                            targetSection.classList.remove('hidden');
+                            window.scrollTo({top: targetSection.offsetTop - 20, behavior: 'smooth'});
+                        }
+                    }
+                });
+            });
+            
+            // Обработка якорных ссылок при загрузке страницы
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const targetSection = document.getElementById(hash);
+                
+                if (targetSection && targetSection !== mainSection) {
+                    sections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    targetSection.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
